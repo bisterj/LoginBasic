@@ -1,19 +1,19 @@
 import './App.css';
 
-function Field() {
+function Field({ placeholder, type }) {
   return (
-    <input placeholder='placeholder'/>
+    <input placeholder={placeholder} type={type} />
   );
 };
 
 function LoginForm() {
   return(
-    <div className='LoginForm'>
+    <form className='LoginForm'>
       <h1>LOGIN</h1>
-      <Field />
-      <Field />
+      <Field placeholder={'Username'} type={'text'} />
+      <Field placeholder={'Password'} type={'password'} />
       <button>Submit</button>
-    </div>
+    </form>
   );
 };
 
