@@ -1,26 +1,66 @@
+import { useState } from 'react';
 import './App.css';
 
-function Field({ placeholder, type }) {
+function Field({ placeholder, type, value, setValue }) {
   return (
-    <input placeholder={placeholder} type={type} />
+    <input 
+      placeholder={placeholder} 
+      type={type} 
+      value={value} 
+      onChange={(e) => setValue(e.target.value)} />
   );
 };
 
-function LoginForm() {
+function LoginForm({ users }) {
+  const [message, setMessage] = useState('no successful login yet');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleClick(username, password) {
+
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+      if (user.username === username && user.password === password) {
+        setMessage('successful login');
+        break;
+      } else if (i === users.length - 1) {
+        setMessage('failed Login');
+      }
+    }
+  }
+
   return(
-    <form className='LoginForm'>
+    <div className='LoginForm'>
       <h1>LOGIN</h1>
-      <Field placeholder={'Username'} type={'text'} />
-      <Field placeholder={'Password'} type={'password'} />
-      <button>Submit</button>
-    </form>
+      <Field 
+        placeholder={'Username'} 
+        type={'text'} 
+        value={username} 
+        setValue={setUsername} />
+      
+      <Field 
+        placeholder={'Password'} 
+        type={'password'} 
+        value={password} 
+        setValue={setPassword} />
+      
+      <button onClick={() => handleClick(username, password)} >Submit</button>
+      <p>{message}</p>
+      <p>Username: {username}</p>
+      <p>Passsword: {password}</p>
+    </div>
   );
 };
 
 export default function App() {
   return(
     <div className='App'>
-      <LoginForm />
+      <LoginForm users={users} />
     </div>
   );
 };
+
+const users = [
+  {username: 'bisterj', password:'Pass123!'},
+  {username: 'gregguy', password:'Greg#32'}
+];
